@@ -1,0 +1,9 @@
+<div>
+    <h3>{{ topic.title }}</h3>
+    <p>{{ topic.content }}</p>
+</div>
+<div>
+    {% for comment in comments %}
+    <p style="border: black solid 1px">{{ comment.content }}</p>
+    {% endfor %}
+</div>

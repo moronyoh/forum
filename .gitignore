@@ -1,0 +1,5 @@
+db.sqlite3
+forum/migrations/
+.project
+*.pyc
+.pydevproject
