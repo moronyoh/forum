@@ -1,6 +1,4 @@
-import django.contrib.auth
 from django.db import models
-from django.shortcuts import get_object_or_404
 from django.template.defaultfilters import slugify
 
 
@@ -43,6 +41,13 @@ class Topic(Post):
     def get_topic(cls, slug):
         topic = Topic.objects.filter(slug=slug)
         return topic
+    
+    @classmethod
+    def get_last_topic(cls, number=10):
+        if not isinstance(number, int):
+            number = 10
+        topics = Topic.objects.order_by('creation_date')
+        return topics[:number]
 
 
 class Comment(models.Model):

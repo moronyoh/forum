@@ -1,0 +1,5 @@
+<div>
+    {% for topic in topics %}
+    <p style="border: black solid 1px"><a href="view-topic/{{ topic.slug }}">{{ topic.title }}</a></p>
+    {% endfor %}
+</div>
