@@ -12,16 +12,20 @@ def index(request):
         {
             'topics': topics,
         })
-    
-def topic_detail(request, slug):
+
+
+def topic_detail(request, slug, page=1):
+    page = int(page)
     topic = models.Topic.get_topic(slug)
-    if len(topic) != 1:
+    if not topic:
         return HttpResponseNotFound()
-    topic = topic[0]
-    comments = topic.get_comments()
-    return render_to_response(
-        'topic_detail.html',
-        {
-            'topic': topic,
-            'comments': comments,
-        })
+    else:
+        comments = topic.get_comments(page=page)
+        if page > 1 and len(comments) == 0:
+            comments = topic.get_comments(page=1)
+        return render_to_response(
+            'topic_detail.html',
+            {
+                'topic': topic,
+                'comments': comments,
+            })

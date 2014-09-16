@@ -5,5 +5,7 @@
 <div>
     {% for comment in comments %}
     <p style="border: black solid 1px">{{ comment.content }}</p>
+    {% empty %}
+    <p>There isn't any comments.</p>
     {% endfor %}
 </div>

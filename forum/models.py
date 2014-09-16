@@ -24,11 +24,11 @@ class Post(models.Model):
             self.slug = slugify(self.title[:50])
         super(Post, self).save(*args, **kwargs)
 
-    def get_comments(self):
-#         comments = self.comment_set.all()
-#         return comments
+    def get_comments(self, page=1, number_of_comment_per_page=10):
+        #         comments = self.comment_set.all()
+        #         return comments
         comments = Comment.objects.filter(parent=self)
-        return comments
+        return comments[number_of_comment_per_page * (page - 1):number_of_comment_per_page * page]
 
     def __unicode__(self):
         return self.title
@@ -40,8 +40,11 @@ class Topic(Post):
     @classmethod
     def get_topic(cls, slug):
         topic = Topic.objects.filter(slug=slug)
-        return topic
-    
+        if len(topic) != 1:
+            return None
+        else:
+            return topic[0]
+
     @classmethod
     def get_last_topic(cls, number=10):
         if not isinstance(number, int):
